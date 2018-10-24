@@ -1,7 +1,9 @@
 package com.config.environment;
 
-import com.config.data.entity.ApplicationPropertyEntity;
-import com.config.data.repository.ApplicationPropertyRepository;
+import com.config.data.entities.ApplicationEntity;
+import com.config.data.entities.PropertyEntity;
+import com.config.data.repository.ApplicationRepository;
+import com.config.data.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.config.environment.Environment;
 import org.springframework.cloud.config.environment.PropertySource;
@@ -19,7 +21,7 @@ public class OracleEnvironmentRepository implements EnvironmentRepository {
     private static final String DEFAULT_LABEL = "default";
 
     @Autowired
-    private ApplicationPropertyRepository applicationPropertyRepository;
+    private ApplicationRepository applicationRepository;
 
     @Override
     public Environment findOne(String application, String profile, String label) {
@@ -40,23 +42,23 @@ public class OracleEnvironmentRepository implements EnvironmentRepository {
         List<String> labels = Arrays.asList(label, DEFAULT_LABEL); // Default configuration will have 'null' label
         labels = sortedUnique(labels);
 
-        List<ApplicationPropertyEntity> propertyEntities = applicationPropertyRepository.findApplicationPropertyEntityByApplicationPropertyApp(application);
+        ApplicationEntity applicationEntity = applicationRepository.findOneApplicationNameByApplicationName(application);
 
         Environment environment = new Environment(application, profilesArr, label, null, null);
 
-        Map m = mapPropertiesToMap(propertyEntities);
+        Map m = mapPropertiesToMap(applicationEntity.getPropertyEntities());
 
         PropertySource source = new PropertySource(application, m);
         environment.add(source);
         return environment;
     }
 
-    private Map mapPropertiesToMap(List<ApplicationPropertyEntity> entities) {
+    private Map mapPropertiesToMap(List<PropertyEntity> entities) {
 
         Map map = new LinkedHashMap<String, Object>();
 
-        for (ApplicationPropertyEntity s : entities) {
-            map.put(s.getApplicationPropertyKey(), s.getApplicationPropertyValue());
+        for (PropertyEntity s : entities) {
+            map.put(s.getPropertyKey(), s.getPropertyValue());
         }
         return map;
     }

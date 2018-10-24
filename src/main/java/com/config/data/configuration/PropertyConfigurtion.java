@@ -8,6 +8,6 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @Configuration
 @EnableJpaRepositories(basePackages = "com.config.data.repository")
 @ComponentScan("com.config.data")
-@EntityScan("com.config.data.entity")
-public class ApplicationPropertyConfigurtion {
+@EntityScan("com.config.data.entities")
+public class PropertyConfigurtion {
 }
