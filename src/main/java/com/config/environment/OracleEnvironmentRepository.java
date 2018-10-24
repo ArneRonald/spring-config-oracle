@@ -3,7 +3,6 @@ package com.config.environment;
 import com.config.data.entities.ApplicationEntity;
 import com.config.data.entities.PropertyEntity;
 import com.config.data.repository.ApplicationRepository;
-import com.config.data.repository.PropertyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.config.environment.Environment;
 import org.springframework.cloud.config.environment.PropertySource;

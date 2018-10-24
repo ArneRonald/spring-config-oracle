@@ -1,11 +1,7 @@
 package com.config.data.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.List;
-
-import static javax.persistence.CascadeType.ALL;
 
 @Entity
 @Table(name = "APPLICATIONS")
